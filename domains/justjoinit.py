@@ -2,9 +2,14 @@
 Scrapper for justjoinit.
 """
 
+
+from database import Database, Movie
 from collections import Counter
+from datetime import date
+import sys
 import requests
 import matplotlib.pyplot as plt
+sys.path.append("..")
 
 
 class JustJoinIt:
@@ -17,6 +22,7 @@ class JustJoinIt:
     seniority_counts = Counter()
     skill_counts = Counter()
     remote_counts = 0
+    db = Database().get_session()
 
     def get_data(self):
         """
@@ -73,3 +79,14 @@ class JustJoinIt:
             print(f"Skills: there are {count} records for {skill}.")
         for city, count in self.city_counts.items():
             print(f"Localization: there are {count} records for {city}.")
+
+    def add_items(self):
+        print("test")
+        bourne_identity = Movie("The Bourne Identity", date(2002, 10, 11))
+        self.db.add(bourne_identity)
+        res = self.db.query(Movie).all()
+        print(res)
+        print('KAKA')
+
+
+        print("test1")
