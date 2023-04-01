@@ -1,5 +1,3 @@
-Projekt codziennie zbiera dane o liczbie ofert pracy na stronach: w zależności od kategorii [C, C++, Javascript, Typescript, Python] i zapisuje je do bazy danych
+Job Offers in Poland Scraper
 
-- nofluffjobs.pl
-- justjoin.it
-- pracuj.pl (sekcja IT)
+This project scrapes job offer data from multiple job offers platforms in Poland. It then parses the data, counts relevant information such as remote work counts, job offers in each city in Poland, skills count, seniority levels and saves it to the database.

@@ -15,7 +15,7 @@ class JustJoinIt:
     overall_positions = 0
     city_counts = Counter()
     seniority_counts = Counter()
-    kind_counts = Counter()
+    skill_counts = Counter()
     remote_counts = 0
 
     def get_data(self):
@@ -33,7 +33,7 @@ class JustJoinIt:
         for record in self.data:
             self.city_counts[record['city']] += 1
             self.seniority_counts[record['experience_level']] += 1
-            self.kind_counts[record['marker_icon']] += 1
+            self.skill_counts[record['marker_icon']] += 1
         self.remote_counts = sum(1 for record in self.data if record['remote'])
         self.overall_positions = len(self.data)
 
@@ -69,7 +69,7 @@ class JustJoinIt:
         print(f"There are {self.remote_counts} remote records.")
         for level, count in self.seniority_counts.items():
             print(f"Seniority: there are {count} records for {level}.")
-        for kind, count in self.kind_counts.items():
-            print(f"Kind: there are {count} records for {kind}.")
+        for skill, count in self.skill_counts.items():
+            print(f"Skills: there are {count} records for {skill}.")
         for city, count in self.city_counts.items():
             print(f"Localization: there are {count} records for {city}.")
