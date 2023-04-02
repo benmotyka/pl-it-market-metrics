@@ -9,8 +9,9 @@ import matplotlib.pyplot as plt
 
 class JustJoinIt:
     """
-    This is a class for scrapping data from justjoinit.
+    Class for scrapping data from justjoinit.
     """
+    _url = "https://justjoin.it/api/offers"
     data = None
     overall_positions = 0
     city_counts = Counter()
@@ -22,7 +23,7 @@ class JustJoinIt:
         """
         Returns the data from website. JustJoinIt has a very simple API that returns ALL of the offers, no need for pagination/filtering/authentication
         """
-        response = requests.get("https://justjoin.it/api/offers/", timeout=10)
+        response = requests.get(self._url, timeout=10)
         response.raise_for_status()
         self.data = response.json()
 
@@ -41,11 +42,11 @@ class JustJoinIt:
         """
         Draws a plot.
         """
-        job_offers_threshold = 10
+        min_job_offers_threshold = 10
 
         # Filter the Counter object to only include values greater than job_offers_threshold
         city_counts = {key: value for key,
-                       value in self.city_counts.items() if value > job_offers_threshold}
+                       value in self.city_counts.items() if value > min_job_offers_threshold}
 
         # Sort the dictionary by values in descending order
         sorted_data = sorted(city_counts.items(),
