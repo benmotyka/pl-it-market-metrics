@@ -29,7 +29,7 @@ class JustJoinIt:
 
     def count_data(self):
         """
-        Counts the data.
+        Counts the data
         """
         for record in self.data:
             self.city_counts[record['city']] += 1

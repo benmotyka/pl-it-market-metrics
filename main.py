@@ -18,6 +18,8 @@ def main():
      
     no_fluff_jobs = NoFluffJobs()
     no_fluff_jobs.get_data()
+    no_fluff_jobs.count_data()
+    no_fluff_jobs.print_stats()
 
 
 if __name__ == '__main__':
