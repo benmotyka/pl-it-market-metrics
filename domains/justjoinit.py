@@ -1,16 +1,9 @@
-"""
-Scrapper for justjoinit.
-"""
-
 from collections import Counter
 import requests
 import matplotlib.pyplot as plt
 
 
 class JustJoinIt:
-    """
-    Class for scrapping data from justjoinit.
-    """
     _url = "https://justjoin.it/api/offers"
     data = None
     overall_positions = 0
@@ -21,16 +14,13 @@ class JustJoinIt:
 
     def get_data(self):
         """
-        Returns the data from website. JustJoinIt has a very simple API that returns ALL of the offers, no need for pagination/filtering/authentication
+        JustJoinIt has a very simple API that returns ALL of the offers, no need for pagination/filtering/authentication
         """
         response = requests.get(self._url, timeout=10)
         response.raise_for_status()
         self.data = response.json()
 
     def count_data(self):
-        """
-        Counts the data
-        """
         for record in self.data:
             self.city_counts[record['city']] += 1
             self.seniority_counts[record['experience_level']] += 1
@@ -39,9 +29,6 @@ class JustJoinIt:
         self.overall_positions = len(self.data)
 
     def draw_plot(self):
-        """
-        Draws a plot.
-        """
         min_job_offers_threshold = 10
 
         # Filter the Counter object to only include values greater than job_offers_threshold
@@ -52,7 +39,7 @@ class JustJoinIt:
         sorted_data = sorted(city_counts.items(),
                              key=lambda x: x[1], reverse=True)
 
-        fig, ax = plt.subplots()
+        _, ax = plt.subplots()
         ax.bar([x[0] for x in sorted_data], [x[1] for x in sorted_data])
         ax.set_xlabel('City')
         ax.set_ylabel('Number of job offers')
@@ -63,9 +50,6 @@ class JustJoinIt:
         plt.show()
 
     def print_stats(self):
-        """
-        Prints the stats.
-        """
         print(f"There are {self.overall_positions} overall positions.")
         print(f"There are {self.remote_counts} remote records.")
         for level, count in self.seniority_counts.items():

@@ -1,16 +1,7 @@
-"""
-Scrapper for justjoinit.
-"""
-
 from collections import Counter
 import requests
-import matplotlib.pyplot as plt
-
 
 class NoFluffJobs:
-    """
-    Class for scrapping data from NoFluffJobs.
-    """
     _url = "https://nofluffjobs.com/api/search/posting"
     data = None
     overall_positions = 0
@@ -20,9 +11,6 @@ class NoFluffJobs:
     remote_counts = 0
 
     def get_data(self):
-        """
-        Returns data from website
-        """
         payload = {'rawSearch': ''}
         params = {
             "page": "1",
@@ -36,11 +24,10 @@ class NoFluffJobs:
         self.data = response.json()
 
     def count_data(self):
-        """
-        Counts the data
-        """
+        let = 0
         self.overall_positions = self.data['totalCount']
         for record in self.data['postings']:
+            let= let + 1
             if ('technology' in record):
                 self.skill_counts[record['technology']] += 1
             if ('seniority' in record):
@@ -48,11 +35,9 @@ class NoFluffJobs:
                     self.seniority_counts[seniority_item] += 1
         self.remote_counts = sum(
             1 for record in self.data['postings'] if record['location']['fullyRemote'])
+        print(let)
 
     def print_stats(self):
-        """
-        Prints the stats.
-        """
         print(f"There are {self.overall_positions} overall positions.")
         print(f"There are {self.remote_counts} remote records.")
         for skill, count in self.skill_counts.items():
