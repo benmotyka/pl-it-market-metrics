@@ -16,11 +16,14 @@ class JustJoinIt:
         """
         JustJoinIt has a very simple API that returns ALL of the offers, no need for pagination/filtering/authentication
         """
+
+        print("Getting data from JustJoinIt...")
         response = requests.get(self._url, timeout=10)
         response.raise_for_status()
         self.data = response.json()
 
     def count_data(self):
+        print("Counting data from JustJoinIt...")
         for record in self.data:
             self.city_counts[record['city']] += 1
             self.seniority_counts[record['experience_level']] += 1

@@ -1,6 +1,7 @@
 from collections import Counter
 import requests
 
+
 class NoFluffJobs:
     _url = "https://nofluffjobs.com/api/search/posting"
     data = None
@@ -11,8 +12,12 @@ class NoFluffJobs:
     remote_counts = 0
 
     def get_data(self):
+        """
+        NoFluffJobs API is paginated, so we need to get positions from all of the pages
+        """
+
         print("Getting data from NoFluffJobs...")
-        # Get first page to get number of pages and other details
+
         payload = {'rawSearch': ''}
         params = {
             "page": "1",
@@ -24,8 +29,8 @@ class NoFluffJobs:
             self._url, timeout=15, json=payload, params=params)
         response.raise_for_status()
         result = response.json()
-        pages = result['totalPages']
 
+        pages = result['totalPages']
         self.postings.extend(result['postings'])
         self.overall_positions = result['totalCount']
 
