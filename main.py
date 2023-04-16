@@ -1,7 +1,3 @@
-"""
-Main module.
-"""
-
 from domains.justjoinit import JustJoinIt
 from domains.nofluffjobs import NoFluffJobs
 

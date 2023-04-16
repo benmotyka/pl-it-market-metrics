@@ -4,13 +4,15 @@ import requests
 class NoFluffJobs:
     _url = "https://nofluffjobs.com/api/search/posting"
     data = None
+    postings = []
     overall_positions = 0
-    city_counts = Counter()
     seniority_counts = Counter()
     skill_counts = Counter()
     remote_counts = 0
 
     def get_data(self):
+        print("Getting data from NoFluffJobs...")
+        # Get first page to get number of pages and other details
         payload = {'rawSearch': ''}
         params = {
             "page": "1",
@@ -21,21 +23,37 @@ class NoFluffJobs:
         response = requests.post(
             self._url, timeout=15, json=payload, params=params)
         response.raise_for_status()
-        self.data = response.json()
+        result = response.json()
+        pages = result['totalPages']
+
+        self.postings.extend(result['postings'])
+        self.overall_positions = result['totalCount']
+
+        # Iterate over other pages
+        for page in range(2, pages):
+            params = {
+                "page": str(page),
+                "salaryCurrency": "PLN",
+                "salaryPeriod": "month",
+                "region": "pl",
+            }
+            print(f"Getting page {page} of {pages} for NoFluffJobs...")
+            response = requests.post(
+                self._url, timeout=15, json=payload, params=params)
+            response.raise_for_status()
+            result = response.json()
+            self.postings.extend(result['postings'])
 
     def count_data(self):
-        let = 0
-        self.overall_positions = self.data['totalCount']
-        for record in self.data['postings']:
-            let= let + 1
+        print("Counting data from NoFluffJobs...")
+        for record in self.postings:
             if ('technology' in record):
                 self.skill_counts[record['technology']] += 1
             if ('seniority' in record):
                 for seniority_item in record['seniority']:
                     self.seniority_counts[seniority_item] += 1
         self.remote_counts = sum(
-            1 for record in self.data['postings'] if record['location']['fullyRemote'])
-        print(let)
+            1 for record in self.postings if record['location']['fullyRemote'])
 
     def print_stats(self):
         print(f"There are {self.overall_positions} overall positions.")
