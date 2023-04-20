@@ -1,8 +1,11 @@
-from datetime import datetime   
+from os import environ
+from dotenv import load_dotenv
+from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy.orm import declarative_base, sessionmaker
 
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import declarative_base
+load_dotenv()
 
+engine = create_engine(environ.get("DATABASE_URL"), echo=True)
 Base = declarative_base()
 
 class ActivityModel(Base):
@@ -11,3 +14,7 @@ class ActivityModel(Base):
     id = Column(Integer, primary_key=True)
     created_at = Column(DateTime)
     domain = Column(String(30), nullable=False) 
+
+Session = sessionmaker(bind=engine)
+
+session = Session()
