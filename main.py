@@ -1,5 +1,6 @@
 from domains.justjoinit import JustJoinIt
 from domains.nofluffjobs import NoFluffJobs
+from models import session, ActivityModel
 
 
 def main():
@@ -13,6 +14,10 @@ def main():
     no_fluff_jobs.get_data()
     no_fluff_jobs.count_data()
     no_fluff_jobs.print_stats()
+
+    activity = ActivityModel(domain="justjoinit")
+    session.add(activity)
+    session.commit()
 
 
 if __name__ == '__main__':
