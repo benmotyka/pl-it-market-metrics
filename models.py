@@ -19,7 +19,6 @@ class ActivityModel(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     domain = Column(String(30), nullable=False)
 
-
 Session = sessionmaker(bind=engine)
 
 session = Session()

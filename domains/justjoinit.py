@@ -1,6 +1,10 @@
-from collections import Counter
+import os
+import sys
 import requests
 import matplotlib.pyplot as plt
+from collections import Counter
+from models import session, ActivityModel
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 class JustJoinIt:
@@ -61,3 +65,8 @@ class JustJoinIt:
             print(f"Skills: there are {count} records for {skill}.")
         for city, count in self.city_counts.items():
             print(f"Localization: there are {count} records for {city}.")
+
+    def save_data(self):
+        print("Saving data from JustJoinIt to database...")
+        session.add(ActivityModel(domain="JustJoinIt"))
+        session.commit()
