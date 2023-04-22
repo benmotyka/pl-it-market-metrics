@@ -1,14 +1,15 @@
 import os
 import sys
+from collections import Counter
 import requests
 import matplotlib.pyplot as plt
-from collections import Counter
-from models import session, ActivityModel
+from models import session, ActivityModel, PositionsModel, SeniorityModel, LocalizationModel
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 class JustJoinIt:
     _url = "https://justjoin.it/api/offers"
+    _name = "JustJoinIt"
     data = None
     overall_positions = 0
     city_counts = Counter()
@@ -68,5 +69,10 @@ class JustJoinIt:
 
     def save_data(self):
         print("Saving data from JustJoinIt to database...")
-        session.add(ActivityModel(domain="JustJoinIt"))
+        session.add(ActivityModel(domain=self._name))
+        session.add(PositionsModel(domain=self._name,overall=self.overall_positions,remote_count=self.remote_counts))
+        for level, count in self.seniority_counts.items():
+            session.add(SeniorityModel(domain=self._name,seniority=level,count=count))
+        for city, count in self.city_counts.items():
+            session.add(LocalizationModel(domain=self._name,city=city,count=count))
         session.commit()
