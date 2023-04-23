@@ -20,8 +20,8 @@ class ActivityModel(Base):
     domain = Column(String(30), nullable=False)
 
 
-class PositionsModel(Base):
-    __tablename__ = 'positions'
+class PositionModel(Base):
+    __tablename__ = 'position'
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     domain = Column(String(30), nullable=False)
@@ -49,6 +49,14 @@ class LocalizationModel(Base):
     count = Column(Integer, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+class TechnologyModel(Base):
+    __tablename__ = 'technology'
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    domain = Column(String(30), nullable=False)
+    technology = Column(String(50), nullable=False)
+    count = Column(Integer, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 Session = sessionmaker(bind=engine)
 
