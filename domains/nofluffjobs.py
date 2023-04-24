@@ -39,7 +39,7 @@ class NoFluffJobs:
         self.overall_positions = result['totalCount']
 
         # Iterate over other pages
-        for page in range(2, pages):
+        for page in range(2, pages + 1):
             params = {
                 "page": str(page),
                 "salaryCurrency": "PLN",
