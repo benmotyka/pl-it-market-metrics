@@ -74,5 +74,5 @@ class NoFluffJobs:
 
     def save_data(self):
         print("Saving data from NoFluffJobs to database...")
-        session.add(ActivityModel(domain="NoFluffJobs"))
+        session.add(ActivityModel(domain=self._name))
         session.commit()

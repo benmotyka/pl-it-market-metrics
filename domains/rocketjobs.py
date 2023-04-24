@@ -37,3 +37,27 @@ class RocketJobs:
         response.raise_for_status()
         self.data = response.json()
         print(self.data)
+
+    def count_data(self):
+        print("Counting data from RocketJobs...")
+        for record in self.postings:
+            if ('technology' in record):
+                self.skill_counts[record['technology']] += 1
+            if ('seniority' in record):
+                for seniority_item in record['seniority']:
+                    self.seniority_counts[seniority_item] += 1
+        self.remote_counts = sum(
+            1 for record in self.postings if record['location']['fullyRemote'])
+
+    def print_stats(self):
+        print(f"There are {self.overall_positions} overall positions.")
+        print(f"There are {self.remote_counts} remote records.")
+        for skill, count in self.skill_counts.items():
+            print(f"Skills: there are {count} records for {skill}.")
+        for seniority, count in self.seniority_counts.items():
+            print(f"Seniority: there are {count} records for {seniority}.")
+
+    def save_data(self):
+        print("Saving data from RocketJobs to database...")
+        session.add(ActivityModel(domain=self._name))
+        session.commit()
