@@ -3,7 +3,6 @@ import sys
 from collections import Counter
 import requests
 import matplotlib.pyplot as plt
-from models import session, ActivityModel, PositionModel, SeniorityModel, LocalizationModel, TechnologyModel
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -59,5 +58,3 @@ class RocketJobs:
 
     def save_data(self):
         print("Saving data from RocketJobs to database...")
-        session.add(ActivityModel(domain=self._name))
-        session.commit()

@@ -3,7 +3,6 @@ import sys
 from collections import Counter
 import requests
 import matplotlib.pyplot as plt
-from models import session, ActivityModel, PositionModel, SeniorityModel, LocalizationModel, TechnologyModel
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -69,12 +68,3 @@ class JustJoinIt:
 
     def save_data(self):
         print("Saving data from JustJoinIt to database...")
-        session.add(ActivityModel(domain=self._name))
-        session.add(PositionModel(domain=self._name,overall=self.overall_positions,remote_count=self.remote_counts))
-        for level, count in self.seniority_counts.items():
-            session.add(SeniorityModel(domain=self._name,seniority=level,count=count))
-        for city, count in self.city_counts.items():
-            session.add(LocalizationModel(domain=self._name,city=city,count=count))
-        for skill, count in self.skill_counts.items():
-            session.add(TechnologyModel(domain=self._name,technology=skill,count=count))
-        session.commit()

@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 bin/*
+share/*
+include/*
+pyvenv.cfg

@@ -2,7 +2,6 @@ import os
 import sys
 import requests
 from collections import Counter
-from models import session, ActivityModel
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -74,5 +73,4 @@ class NoFluffJobs:
 
     def save_data(self):
         print("Saving data from NoFluffJobs to database...")
-        session.add(ActivityModel(domain=self._name))
-        session.commit()
+
